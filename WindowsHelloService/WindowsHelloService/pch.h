@@ -1,0 +1,11 @@
+﻿#pragma once
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Security.Cryptography.h>
+#include <winrt/Windows.Security.Credentials.h>
+#include <Windows.h>
+#include <iostream>
+#include <thread>
+#include <future>
+#include <chrono>
+#include <string>
