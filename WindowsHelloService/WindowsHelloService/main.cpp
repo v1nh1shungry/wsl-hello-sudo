@@ -37,7 +37,15 @@ void focus_hello_window(std::future<void> signal) {
     hwnd = FindWindowW(L"Credential Dialog Xaml Host", NULL);
   }
   if (hwnd != NULL) {
+    HWND hForeWnd = GetForegroundWindow();
+    DWORD dwCurId = GetCurrentThreadId();
+    DWORD dwForId = GetWindowThreadProcessId(hForeWnd, NULL);
+    AttachThreadInput(dwCurId, dwForId, TRUE);
+    ShowWindow(hwnd, SW_SHOWNORMAL);
+    SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+    SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
     SetForegroundWindow(hwnd);
+    AttachThreadInput(dwCurId, dwForId, FALSE);
   }
 }
 
