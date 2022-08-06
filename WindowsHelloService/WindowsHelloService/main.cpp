@@ -50,10 +50,6 @@ void focus_hello_window(std::future<void> signal) {
 }
 
 int authenticate(std::string username) {
-  if (!KeyCredentialManager::IsSupportedAsync().get()) {
-    std::cerr << "Windows Hello is not supported" << std::endl;
-    return 1;
-  }
   auto result = KeyCredentialManager::OpenAsync(to_hstring(username)).get();
   if (result.Status() == KeyCredentialStatus::Success) {
     auto key = result.Credential();
@@ -68,7 +64,6 @@ int authenticate(std::string username) {
       return 0;
     }
   }
-  std::cerr << "Authenticating user " << username << " failed!" << std::endl;
   return 1;
 }
 

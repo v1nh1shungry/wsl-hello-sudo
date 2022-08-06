@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
 
@@ -53,11 +54,13 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
   strncpy(ptr, user, user_length);
   ptr += user_length;
   *ptr = 0;
+  printf("[sudo] Windows Hello for %s:\n", user);
   int result = system(command);
   free(command);
   if (result == 0) {
     return PAM_SUCCESS;
   }
+  fprintf(stderr, "sudo: failed to authenticate %s with Windows Hello\n", user);
   return PAM_AUTH_ERR;
 }
 
